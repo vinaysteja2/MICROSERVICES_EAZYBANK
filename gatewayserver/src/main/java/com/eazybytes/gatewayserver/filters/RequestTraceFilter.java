@@ -15,35 +15,35 @@ import reactor.core.publisher.Mono;
 @Component
 public class RequestTraceFilter implements GlobalFilter {
 
-//    private static final Logger logger = LoggerFactory.getLogger(RequestTraceFilter.class);
-//
-//    @Autowired
-//    FilterUtility filterUtility;
-//
-//    @Override
+    private static final Logger logger = LoggerFactory.getLogger(RequestTraceFilter.class);
+
+    @Autowired
+    FilterUtility filterUtility;
+
+    @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-//        HttpHeaders requestHeaders = exchange.getRequest().getHeaders();
-//        if (isCorrelationIdPresent(requestHeaders)) {
-//            logger.debug("eazyBank-correlation-id found in RequestTraceFilter : {}",
-//                    filterUtility.getCorrelationId(requestHeaders));
-//        } else {
-//            String correlationID = generateCorrelationId();
-//            exchange = filterUtility.setCorrelationId(exchange, correlationID);
-//            logger.debug("eazyBank-correlation-id generated in RequestTraceFilter : {}", correlationID);
-//        }
+        HttpHeaders requestHeaders = exchange.getRequest().getHeaders();
+        if (isCorrelationIdPresent(requestHeaders)) {
+            logger.debug("eazyBank-correlation-id found in RequestTraceFilter : {}",
+                    filterUtility.getCorrelationId(requestHeaders));
+        } else {
+            String correlationID = generateCorrelationId();
+            exchange = filterUtility.setCorrelationId(exchange, correlationID);
+            logger.debug("eazyBank-correlation-id generated in RequestTraceFilter : {}", correlationID);
+        }
        return chain.filter(exchange);
    }
-//
-//    private boolean isCorrelationIdPresent(HttpHeaders requestHeaders) {
-//        if (filterUtility.getCorrelationId(requestHeaders) != null) {
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
-//
-//    private String generateCorrelationId() {
-//        return java.util.UUID.randomUUID().toString();
-//    }
+
+    private boolean isCorrelationIdPresent(HttpHeaders requestHeaders) {
+        if (filterUtility.getCorrelationId(requestHeaders) != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private String generateCorrelationId() {
+        return java.util.UUID.randomUUID().toString();
+    }
 
 }
